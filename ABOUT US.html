@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About Us - </title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="mmm.css" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #262a34; /* dark background similar to the image */
+    color: #fff;
+  }
+
+  /* About Us section */
+  .about-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .text-content {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .text-content h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+
+  .text-content h1 span {
+    color: #00ffff;
+  }
+
+  .description {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #ccc;
+  }
+
+  /* Slideshow container (same position as your image) */
+  .slideshow-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    margin-top: 20px;
+  }
+
+  /* Slides */
+  .slides {
+    display: flex;
+    width: 300%; /* 3 images side by side */
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .slide {
+    width: 100%;
+    flex-shrink: 0;
+  }
+.social-media {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Space between icons */
+  margin-bottom: 20px;
+}
+
+.social-media a {
+  color: #fff;
+  font-size: 2rem; /* Makes icons nice and visible */
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+/* Hover effects for a premium feel */
+.social-media a:hover {
+  color: #00ffff; /* Your theme color */
+  transform: translateY(-5px) scale(1.1);
+  text-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+}
+
+/* Specific color for Facebook on hover if you prefer brand colors */
+.social-media a:hover .fa-facebook-f {
+  color: #1877F2; 
+}
+
+/* Specific color for TikTok on hover (Neon Pink/Cyan effect) */
+.social-media a:hover .fa-tiktok {
+  filter: drop-shadow(2px 0px 0px #ff0050) drop-shadow(-2px 0px 0px #00f2ea);
+}
+  .slide img {
+    width: 35%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+
+  /* Responsive adjustments */
+  @media(max-width: 768px) {
+    .about-section {
+      flex-direction: column;
+    }
+    .text-content {
+      text-align: center;
+    }
+    .slideshow-container {
+      margin-top: 20px;
+    }
+  }
+</style>
+</head>
+<!-- Background Shapes -->
+<div class="bg-shapes">
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
+  <div class="shape"></div>
+</div>
+<body>
+
+<div class="container">
+
+  <!-- Header with logo and back button -->
+  <!-- HEADER -->
+  <header>
+        <div class="container" style="padding-top: 20px;">
+            <nav class="glass">
+                <logo style="display: flex; align-items: center; gap: 15px;">
+                    <img src="i see.png" alt="Your Logo" width="50" />
+                    <span style="color: #00ffff; font-size: 1rem; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; font-family: 'Orbitron', sans-serif;">
+                        Internship Finder
+                    </span>
+                </logo>
+                <div class="nav-links">
+                    <a href="INDEX.html" >Home</a>
+                    <a href="seee.html" class="active">About Us</a>
+                    <a href="SEV.html">Services</a>
+                    <a href="companies.html">Companies</a>
+                    <a href="CON.html">Contact Us</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+  <!-- About Us Section -->
+  <div class="about-section">
+    <div class="text-content">
+      <h1>About <span>Us</span></h1>
+      <p class="description">
+        At the heart of our initiative is a commitment to transforming how multimedia students connect with industry opportunities.
+        <br/><br/>
+        Recognizing the rapid growth of the media sector and the challenges students face in securing relevant internships, our project aims to create a dedicated digital platform that simplifies this process for everyone involved.
+        <br/><br/>
+        Our Vision
+        To become the leading digital platform that connects multimedia students with meaningful internship opportunities, fostering growth, innovation, and future-ready professionals in the media industry.
+        <br/><br/>
+        Our Values
+        We believe in fostering innovation, accessibility, and industry collaboration. Our platform is designed to empower students to take control of their career development while enabling media companies to discover talented, motivated individuals. We are dedicated to bridging the disconnect between education and employment, promoting a seamless transition from learning to professional practice.
+        <br/><br/>
+      </p>
+    </div>
+    <!-- Image slideshow (same position) -->
+    <div class="slideshow-container" id="slideshow">
+      <div class="slides" id="slides">
+        <div class="slide"><img src="IMG_2856.JPG" /></div>
+        <div class="slide"><img src="IMG_2855.JPG" /></div>
+        <div class="slide"><img src="IMG_2842.JPG" /></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- Your existing footer -->
+<div id="footer">
+  <div class="container">
+    <footer class="glass">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="seee.html" onclick="showPage('about')">About Us</a>
+          <a href="#" id="termsButton">Terms of Service</a>
+          <a href="CON.html" onclick="showPage('contact')">Contact</a>
+        </div>
+        <div class="copyright">
+          &copy;  2026 Wagwan Users. Crafted with passion. Design by GlitchhKing
+        </div>
+     
+           </div>
+      <div class="social-media">
+  <a href="https://www.instagram.com/glitchhking" target="_blank" title="Follow us on Instagram">
+  <i class="fab fa-instagram"></i>
+</a>
+  </a>
+  
+  <a href="https://www.tiktok.com/@glitchhking" target="_blank" title="Follow us on TikTok">
+    <i class="fab fa-tiktok"></i>
+  </a>
+</div>
+    </footer>
+  </div>
+</div>
+
+<!-- Centered modal for Terms and Conditions -->
+<div id="centerModal" class="center-modal">
+  <div class="modal-box">
+    <span class="close-center" id="closeCenter">&times;</span>
+    <h2 style="color: black;">Terms and Conditions</h2>
+    <p style="color: black;">Welcome to Wagwan Users! By accessing or using our website, you agree to comply with these Terms and Conditions. Please read them carefully. If you do not agree, do not use our site.<br>
+<strong>Use of Content:</strong> All content on this website is owned or licensed by <strong>Wagwan Users.</strong> Unauthorized use is prohibited.<br>
+<strong>User Conduct:</strong> Users agree not to engage in harmful, illegal, or disruptive activities.<br>
+<strong>Privacy:</strong> Your data is handled according to our Privacy Policy, which is incorporated into these terms.<br>
+<strong>Liability:</strong> Wagwan Users is not liable for damages resulting from the use of this site.</p>
+  </div>
+</div>
+
+<!-- Styles for centered modal with slide-up effect -->
+<style>
+  /* Overlay background */
+  .center-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1002;
+  }
+
+  /* Show modal with flex, slide-up animation */
+  .center-modal.show {
+    display: flex;
+  }
+
+  /* Modal box styles with slide from bottom */
+  .modal-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 80%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  /* When visible, slide up and fade in */
+  .center-modal.show .modal-box {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Close button styles */
+  .close-center {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+  }
+</style>
+
+<!-- Script to trigger modal and slideshow -->
+<script>
+  // Modal functionality
+  const termsBtn = document.getElementById('termsButton');
+  const modal = document.getElementById('centerModal');
+  const closeBtn = document.getElementById('closeCenter');
+
+  termsBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.classList.add('show');
+  });
+
+  closeBtn.addEventListener('click', function() {
+    modal.classList.remove('show');
+  });
+
+  window.addEventListener('click', function(e) {
+    if (e.target == modal) {
+      modal.classList.remove('show');
+    }
+  });
+
+  // Slideshow: slide images within the same position, 3 times
+  const slidesContainer = document.getElementById('slides');
+  const totalSlides = 3; // number of images
+  let currentIndex = 0;
+  let cycleCount = 0;
+  const maxCycles = 3; // total cycles
+
+  function slideNext() {
+    currentIndex++;
+    if (currentIndex >= totalSlides) {
+      currentIndex = 0;
+      cycleCount++;
+      if (cycleCount >= maxCycles) {
+        clearInterval(slideInterval);
+        return;
+      }
+    }
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  const slideInterval = setInterval(slideNext, 3000); // every 3 seconds
+</script>
+</body>
+</html>
