@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediaConnect - Get in Touch</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="mmm.css" />
+
+    <style>
+        /* --- GLOBAL STYLES --- */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #262a34; 
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        :root {
+            --accent: #00ffff;
+            --gradient: linear-gradient(135deg, #00ffff 0%, #008b8b 100%);
+        }
+
+        /* --- GLASS NAVIGATION --- */
+        nav.glass {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0 0 25px 25px;
+            margin-bottom: 40px;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+
+        /* --- SECTION 1: MEDIA SEARCH & MAP --- */
+        .search-area { 
+            display: flex; background: rgba(255, 255, 255, 0.05); padding: 5px; 
+            border-radius: 50px; border: 2px solid rgba(0, 255, 255, 0.2);
+            margin-bottom: 30px;
+        }
+        .search-area input { 
+            flex: 1; padding: 15px 25px; border: none; font-size: 1rem; 
+            outline: none; background: transparent; color: white;
+        }
+
+        .content-grid { 
+            display: grid; grid-template-columns: 350px 1fr; gap: 25px; 
+            height: 450px; margin-bottom: 80px; 
+        }
+        .sidebar { background: rgba(255, 255, 255, 0.03); border-radius: 20px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        #map { border-radius: 20px; border: 1px solid rgba(0, 255, 255, 0.1); }
+
+        /* --- SECTION 2: GET IN TOUCH --- */
+        .title-section { text-align: center; margin-bottom: 10px; }
+        .title-section h1 { font-size: 3em; margin: 0; }
+        .highlight { color: var(--accent); }
+        .subtitle { text-align: center; font-size: 1em; color: #ccc; margin-bottom: 50px; }
+
+        .contact-content { display: flex; flex-wrap: wrap; gap: 50px; margin-bottom: 100px; }
+        .form-section { flex: 1.5; min-width: 300px; }
+        .info-section { flex: 1; min-width: 250px; }
+
+        form { display: flex; flex-direction: column; }
+        input[type="text"], input[type="email"], textarea {
+            background: transparent; border: none; border-bottom: 1px solid #666;
+            padding: 15px 10px; margin-bottom: 20px; color: #fff; outline: none; transition: 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--accent); }
+        textarea { height: 120px; resize: none; }
+
+        .send-btn { 
+            background: transparent; border: 1px solid var(--accent); padding: 15px; 
+            border-radius: 50px; color: var(--accent); cursor: pointer; transition: 0.3s; 
+        }
+        .send-btn:hover { background: var(--accent); color: #000; }
+
+        .info-item { display: flex; align-items: center; margin-bottom: 30px; }
+        .icon { 
+            width: 50px; height: 50px; background: #222; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            margin-right: 20px; font-size: 24px; color: var(--accent); 
+        }
+        .info-label { font-size: 0.8em; color: #888; }
+        .info-detail { font-weight: bold; }
+
+        /* --- FLOATING CHAT & MODALS --- */
+        #chat-toggle { 
+            position: fixed; bottom: 20px; right: 20px; background: var(--accent); 
+            color: #000; padding: 15px 25px; border-radius: 50px; cursor: pointer; 
+            font-weight: bold; z-index: 9999; 
+        }
+        #chat-box { 
+            position: fixed; bottom: 85px; right: 20px; width: 300px; height: 400px; 
+            background: rgba(0,0,0,0.9); border: 1px solid var(--accent); border-radius: 15px; 
+            display: flex; flex-direction: column; transform: translateY(120%); transition: 0.3s; z-index: 9998;
+        }
+        #chat-box.open { transform: translateY(0); }
+        #chat-header { background: var(--accent); padding: 10px; color: #000; font-weight: bold; display: flex; justify-content: space-between; border-radius: 14px 14px 0 0; }
+        #chat-messages { flex: 1; padding: 10px; overflow-y: auto; display: flex; flex-direction: column; }
+        #chat-input { display: flex; padding: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+        #chat-input input { flex: 1; background: #222; border: none; padding: 10px; color: white; border-radius: 20px; outline: none; }
+
+        .center-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center; 
+        }
+        .center-modal.show { display: flex; }
+        .modal-box { background: white; padding: 30px; border-radius: 15px; max-width: 500px; color: black; position: relative; }
+
+        footer.glass { background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 25px 25px 0 0; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container" style="padding-top: 20px;">
+            <nav class="glass">
+                <logo style="display: flex; align-items: center; gap: 15px;">
+                    <img src="i see.png" alt="Your Logo" width="50" />
+                    <span style="color: #00ffff; font-size: 1rem; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; font-family: 'Orbitron', sans-serif;">
+                        Internship Finder
+                    </span>
+                </logo>
+                <div class="nav-links">
+                    <a href="INDEX.html" class="active">Home</a>
+                    <a href="seee.html">About</a>
+                    <a href="SEV.html">Services</a>
+                    <a href="companies.html">Companies</a>
+                    <a href="CON.html">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-area">
+            <input type="text" id="searchInput" placeholder="Search Industry / Radio Stations...">
+        </div>
+
+        <div class="content-grid">
+            <div class="sidebar" id="infoPanel">
+                <h3 style="color: var(--accent);">Industry Explorer</h3>
+                <p style="color: #888;">Select a location on the map or search to see company details.</p>
+            </div>
+            <div id="map"></div>
+        </div>
+
+        <div class="title-section">
+            <h1>Get in <span class="highlight">Touch</span></h1>
+        </div>
+        <div class="subtitle">With Us</div>
+
+        <div class="contact-content">
+            <div class="form-section">
+                <form id="contactForm">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="text" placeholder="Subject">
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit" class="send-btn">Send Message</button>
+                </form>
+            </div>
+
+            <div class="info-section">
+                <div class="info-item">
+                    <div class="icon">📍</div>
+                    <div class="info-text">
+                        <div class="info-label">Location</div>
+                        <div class="info-detail">Lobatse Town, Botoka Street, Plot 1227</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="icon">✉️</div>
+                    <div class="info-text">
+                        <div class="info-label">Email</div>
+                        <div class="info-detail">kingphillips58841@gmail.com</div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="icon">📞</div>
+                    <div class="info-text">
+                        <div class="info-label">Phone</div>
+                        <div class="info-detail">+267 75083199</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="glass container">
+        <div class="footer-links" style="margin-bottom: 15px;">
+            <a href="#" id="termsButton" style="color: #ccc; text-decoration: none; margin: 0 15px;">Terms of Service</a>
+            <a href="CON.html" style="color: #ccc; text-decoration: none; margin: 0 15px;">Contact</a>
+        </div>
+        <div class="copyright">&copy; 2026 Wagwan Users. Design by GlitchhKing</div>
+    </footer>
+
+    <div id="chat-toggle">Inbox</div>
+    <div id="chat-box">
+        <div id="chat-header">
+            <span>AI Assistant</span>
+            <span id="close-chat" style="cursor:pointer;">&times;</span>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <input type="text" id="user-input" placeholder="Ask me anything...">
+            <button id="send-chat-btn" style="background: var(--accent); border:none; padding: 5px 10px; border-radius: 10px; margin-left: 5px; cursor:pointer;">Send</button>
+        </div>
+    </div>
+
+    <div id="centerModal" class="center-modal">
+        <div class="modal-box">
+            <h2 style="margin-top:0;">Terms and Conditions</h2>
+            <p>By using <strong>Wagwan Users</strong>, you agree to our terms. Unauthorized content use is prohibited. Your privacy is managed per our Policy.</p>
+            <button onclick="document.getElementById('centerModal').classList.remove('show')" style="width:100%; padding:10px; background:var(--accent); border:none; cursor:pointer; font-weight:bold;">I Agree</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 1. Map Setup
+        const map = L.map('map').setView([-25.2155, 25.6705], 13); // Centered on Lobatse
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        L.marker([-25.2155, 25.6705]).addTo(map).bindPopup("Our Office").openPopup();
+
+        // 2. Chat Logic
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatBox = document.getElementById('chat-box');
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+
+        chatToggle.onclick = () => chatBox.classList.toggle('open');
+        document.getElementById('close-chat').onclick = () => chatBox.classList.remove('open');
+
+        document.getElementById('send-chat-btn').onclick = () => {
+            const msg = userInput.value;
+            if(!msg) return;
+            appendMsg('User', msg, '#00ffff', '#000', 'flex-end');
+            userInput.value = '';
+            setTimeout(() => appendMsg('AI', "How can I assist you with MediaConnect today?", '#222', '#fff', 'flex-start'), 1000);
+        };
+
+        function appendMsg(sender, text, bg, color, align) {
+            const div = document.createElement('div');
+            div.style.cssText = `background:${bg}; color:${color}; align-self:${align}; padding:10px; border-radius:10px; margin-bottom:10px; max-width:80%; font-size:14px;`;
+            div.innerText = text;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // 3. Modal Logic
+        document.getElementById('termsButton').onclick = (e) => {
+            e.preventDefault();
+            document.getElementById('centerModal').classList.add('show');
+        }
+    </script>
+</body>
+</html>
